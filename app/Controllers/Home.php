@@ -7,6 +7,15 @@ class Home extends BaseController
 		return view('bookview');
 	}
 
+	public function bookcreate()
+	{
+		return view('bookcreate');
+	}
+
+	public function bookmodify()
+	{
+		return view('bookmodify');
+	}
 	//--------------------------------------------------------------------
 
 }

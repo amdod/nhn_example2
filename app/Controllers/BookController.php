@@ -9,27 +9,38 @@ class BookController extends ResourceController
 {
     use ResponseTrait;
 
-	public function index()
+	public function dateselect($start, $end)
 	{
         $model = new BookModel();
-        $data['events'] = $model->findAll();
+        $start_time = $start." 00:00:00";
+        $end_time = $end." 23:59:59";
+
+        $data['events'] = $model->where('use_date >=', $start_time)->where('use_date <=', $end_time)->find();
+        
+        return $this->respond($data);
+    }
+
+    public function book($id = null)
+	{
+        $model = new BookModel();
+        $data['events'] = $model->find($id);
         return $this->respond($data);
     }
 
     public function create()
     {
-        $model = new BoardModel();
+        $model = new BookModel();
         $result = $model->insert($_POST);
 
         return $this->respondCreated($result);
     }
 
-    public function update($number = null)
+    public function update($id = null)
     {
-        $model = new BoardModel();
+        $model = new BookModel();
         
         //if ($this->request->getVar('password') == $model->find($number)->password) {
-        $result = $model->update($number, $_POST);
+        $result = $model->update($id, $_POST);
 
         return $this->respond($result); 
         //}

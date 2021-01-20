@@ -56,6 +56,12 @@
             {{ $refs.calendar.title }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-toolbar-title>
+            수입: {{ total_income() }}
+            <v-spacer></v-spacer>
+            지출: {{ total_use() }}
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
           <v-menu
             bottom
             right
@@ -119,7 +125,9 @@
               dark
             >
               <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
+                <v-icon
+                @click="modifyClick(selectedEvent.id)"
+                >mdi-pencil</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
@@ -150,6 +158,17 @@
           </v-card>
         </v-menu>
       </v-sheet>
+      <v-container>
+      <v-row align="center"
+            justify="space-around"
+      >
+                <v-btn 
+                color="primary"
+                @click="writeClick">
+                    추가하기
+                </v-btn>
+      </v-row>
+      </v-container>
     </v-col>
   </v-row>
   </v-app>
@@ -177,6 +196,7 @@ new Vue({
         day: '일',
         '4day': '4 일',
       },
+      selectedMonthEvents: [],
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
@@ -187,6 +207,7 @@ new Vue({
     mounted () {
       this.$refs.calendar.checkChange()
     },
+    
     methods: {
       viewDay ({ date }) {
         this.focus = date
@@ -224,7 +245,7 @@ new Vue({
       },
       updateRange ({ start, end }) {
         console.log('fetch list')
-            axios.get('http://localhost/public/bookcontroller/index')
+            axios.get(`http://localhost/public/bookcontroller/dateselect/${start.date}/${end.date}`)
             .then((response) => {
                 console.log(response)
                 console.log(response.data.events)
@@ -235,14 +256,14 @@ new Vue({
                   id: item.id,
                   name: item.memo,
                   status: item.use_type,
-                  start: new Date(item.use_date),
-                  end: new Date(item.use_date),
+                  start: item.use_date,
+                  end: item.use_date,
                   cost: item.cost,
                   color: this.colors[this.rnd(0, this.colors.length - 1)],
                   timed: false
                 });
                 });
-                console.log(temp[0].start)
+
                 this.events = temp;
             })
             .catch((error) => {
@@ -251,17 +272,53 @@ new Vue({
       },
 
       deleteClick(id) {
-            axios.get(`http://localhost/public/bookcontroller/delete/${id}`)
+            axios.delete(`http://localhost/public/bookcontroller/delete/${id}`)
             .then((response) => {
                 console.log(response)
+                const temp = []
+
+              console.log(id)
+                this.events.forEach(item => {
+                  if(item.id != id){
+                    temp.push(item);
+                  }
+                });
                 
+                this.events = temp;
                 this.selectedOpen = false
             })
             .catch((error) => {
                 console.log(error) 
             })
         },
+        writeClick() { 
+            window.location.href = `http://localhost/public/home/bookcreate` 
+        }, 
+        modifyClick(id) { 
+            window.location.href = `http://localhost/public/home/bookmodify/${id}` 
+        }, 
 
+        total_income() {
+            var total = 0;
+              this.events.forEach(item => {
+              if(item.status == "수입"){
+                total += Number(item.cost);
+              }
+            });
+
+          return total;
+          },
+
+          total_use() {
+            var total = 0;
+              this.events.forEach(item => {
+              if(item.status == "지출"){
+                total += Number(item.cost);
+              }
+            });
+
+          return total;
+          },
 
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
