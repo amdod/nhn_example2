@@ -57,9 +57,9 @@
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-title>
-          <span class="blue--text">수입: {{ total_income() }}</span>
+          <span class="blue--text">수입: {{ total_income() }}원</span>
             <v-spacer></v-spacer>
-            <span class="red--text">지출: {{ total_use() }}</span>
+            <span class="red--text">지출: {{ total_use() }}원</span>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-menu
