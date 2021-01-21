@@ -195,17 +195,17 @@
           </v-card>
         </v-menu>
       </v-sheet>
-      <div align="left">
+
+      <div align="center">
       <v-container>
-      <v-row>
                 <v-btn 
                 color="primary"
                 @click="writeClick">
                     추가하기
                 </v-btn>
-      </v-row>
       </v-container>
       </div>
+      
     </v-col>
   </v-row>
   </v-app>
