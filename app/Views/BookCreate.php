@@ -19,7 +19,9 @@
       가계부 추가하기
     </v-app-bar> 
     <v-app>
-    <v-form>
+    <v-form
+    v-model="isFormValid"
+    >
         <v-container style="maxWidth: 700px;">
         <v-row>
         <v-col
@@ -30,6 +32,7 @@
         <v-select
             v-model="use_type"
             :items="['지출', '수입']"
+            :rules="[rules.requiredType]"
             label="수입/지출 선택"
         >
             <template v-slot:item="{ item, attrs, on }">
@@ -47,8 +50,9 @@
         </v-col>
         <v-col>
             <v-text-field
-            :counter="10" 
-            label="가격" 
+            :counter="10"
+            :rules="[rules.requiredInt, rules.numberRule]"
+            label="금액" 
             name="cost" 
             v-model="cost" 
             maxlength="10" >
@@ -60,6 +64,7 @@
             :counter="10" 
             label="메모" 
             name="memo" 
+            :rules="[rules.requiredStr]"
             v-model="memo" 
             maxlength="10" >
             </v-text-field>
@@ -154,6 +159,7 @@
 
                 <v-row>
                 <v-btn
+                    :disabled="!isFormValid"
                     block outlined color="blue"
                     @click="writeClick">
                         등록
@@ -177,13 +183,25 @@ new Vue({
     vuetify: new Vuetify(),
     data: {
         date: new Date().toISOString().substr(0, 10),
+        isFormValid: false,
         menu: false,
         modal: false,
         menu2: false,
 
-        time: null,
+        time: "00:01",
         menu3: false,
         modal2: false,
+
+        rules: {
+          requiredType: value => !!value || '수입/지출을 선택하세요.',
+          requiredInt: value => !!value || '금액을 입력하세요.',
+          requiredStr: value => !!value || '메모를 입력하세요.',
+          numberRule: v  => {
+                                if (!v.trim()) return true;
+                                if (!isNaN(parseInt(v)) && v >= 1 && v <= 9999999999) return true;
+                                  return '1 부터 9999999999까지의 숫자만 가능합니다.';
+                            },
+        },
         
         id: '',
         memo: '',

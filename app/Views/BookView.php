@@ -57,9 +57,9 @@
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-title>
-            수입: {{ total_income() }}
+          <span class="blue--text">수입: {{ total_income() }}</span>
             <v-spacer></v-spacer>
-            지출: {{ total_use() }}
+            <span class="red--text">지출: {{ total_use() }}</span>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-menu
@@ -147,21 +147,57 @@
               >
                 취소
               </v-btn>
-              <v-btn
+              <!-- <v-btn
                 text
                 color="secondary"
                 @click="deleteClick(selectedEvent.id)"
               >
                 삭제
-              </v-btn>
+              </v-btn> -->
+              <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="290"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                  color="secondary"
+                  v-bind="attrs"
+                  v-on="on"
+                  >
+                    삭제
+                  </v-btn>
+                </template>
+              <v-card>
+                <v-card-title class="subtitle-1">
+                  <span class="red--text">정말 삭제하시겠습니까?</span>
+                </v-card-title>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    @click="dialog = false"
+                  >
+                    아니오
+                </v-btn>
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="deleteClick(selectedEvent.id)"
+                  >
+                    예
+                </v-btn>
+                </v-card-actions>
+              </v-card>
+              </v-dialog>
             </v-card-actions>
           </v-card>
         </v-menu>
       </v-sheet>
+      <div align="left">
       <v-container>
-      <v-row align="center"
-            justify="space-around"
-      >
+      <v-row>
                 <v-btn 
                 color="primary"
                 @click="writeClick">
@@ -169,6 +205,7 @@
                 </v-btn>
       </v-row>
       </v-container>
+      </div>
     </v-col>
   </v-row>
   </v-app>
@@ -196,12 +233,13 @@ new Vue({
         day: '일',
         '4day': '4 일',
       },
+      dialog: false,
       selectedMonthEvents: [],
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
       events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+      colors: ['blue','red'],
       names: [],
     }),
     mounted () {
@@ -250,8 +288,16 @@ new Vue({
                 console.log(response)
                 console.log(response.data.events)
                 const temp = []
+                var num = -1
 
                 response.data.events.forEach(item => {
+                  if (item.use_type == "수입") {
+                    num = 0;
+                  }
+                  else {
+                    num = 1;
+                  }
+
                   temp.push({
                   id: item.id,
                   name: item.memo,
@@ -259,7 +305,7 @@ new Vue({
                   start: item.use_date,
                   end: item.use_date,
                   cost: item.cost,
-                  color: this.colors[this.rnd(0, this.colors.length - 1)],
+                  color: this.colors[num],
                   timed: false
                 });
                 });

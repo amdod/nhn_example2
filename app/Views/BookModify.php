@@ -31,12 +31,14 @@
             v-model="use_type"
             :items="use_types"
             label="수입/지출 선택"
+            :rules="[rules.requiredType]"
         >
         </v-select>
         </v-col>
         <v-col>
             <v-text-field
             :counter="10" 
+            :rules="[rules.requiredInt, rules.numberRule]"
             label="수정할 가격" 
             name="cost" 
             v-model="cost" 
@@ -47,6 +49,7 @@
             <v-row>
             <v-text-field
             :counter="10" 
+            :rules="[rules.requiredStr]"
             label="수정할 메모" 
             name="memo" 
             v-model="memo" 
@@ -176,6 +179,17 @@ new Vue({
 
         use_types: ['지출', '수입'],
         
+        rules: {
+          requiredType: value => !!value || '수입/지출을 선택하세요.',
+          requiredInt: value => !!value || '금액을 입력하세요.',
+          requiredStr: value => !!value || '메모를 입력하세요.',
+          numberRule: v  => {
+                                if (!v.trim()) return true;
+                                if (!isNaN(parseInt(v)) && v >= 1 && v <= 9999999999) return true;
+                                  return '1 부터 9999999999까지의 숫자만 가능합니다.';
+                            },
+        },
+        
         id: '',
         memo: '',
         use_type: '',
@@ -195,14 +209,15 @@ new Vue({
             axios.get(`http://localhost/public/bookcontroller/book/${id}`)
             .then((response) => {
                 console.log(response)
-                this.id = response.data.id;
-                console.log(response.data.id);
-                this.memo = response.data.memo;
-                var temp = response.data.use_date.split(" ");
+                this.id = response.data.events.id;
+                this.memo = response.data.events.memo;
+                var temp = response.data.events.use_date.split(" ");
                 this.date = new Date(temp[0]).toISOString().substr(0, 10);
                 var temp2 = temp[1].split(":");
                 this.time = temp2[0] + ":" + temp2[1];
-                this.cost = response.data.cost;
+                this.cost = response.data.events.cost;
+                this.use_type = response.data.events.use_type;
+                
             })
             .catch((error) => {
                 console.log(error) 
