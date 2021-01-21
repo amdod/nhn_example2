@@ -16,6 +16,7 @@
 <div id="app">
 <template>
     <v-app>
+    <v-container style="maxWidth: 1000px;">
   <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
@@ -208,6 +209,7 @@
       
     </v-col>
   </v-row>
+  </v-container>
   </v-app>
 </template>
 </div>
