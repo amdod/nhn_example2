@@ -15,12 +15,24 @@
 
 <div id="app">
 <template>
-    <v-app-bar> 
+    <v-app>
+    <v-container>
+    <v-card
+    class="mx-auto"
+    max-width="600"
+    height="350"
+    elevation="10"
+    >
+    <v-app-bar
+    color="indigo"
+    dark
+    > 
       가계부 수정하기
     </v-app-bar> 
-    <v-app>
-    <v-form>
-        <v-container style="maxWidth: 700px;">
+    <v-form
+    v-model="isFormValid"
+    >
+        <v-container style="maxWidth: 500px;">
         <v-row>
         <v-col
         class="d-flex"
@@ -146,13 +158,16 @@
 
                 <v-row>
                 <v-btn
-                    block outlined color="blue"
-                    @click="modifyClick">
-                        수정
+                  :disabled="!isFormValid"
+                  block outlined color="blue"
+                  @click="modifyClick">
+                      수정
                 </v-btn>
                 </v-row>
         </v-container>
     </v-form>
+    </v-card>
+    </v-container>
 </v-app>
 </template>
 </div>
@@ -176,6 +191,8 @@ new Vue({
         time: null,
         menu3: false,
         modal2: false,
+
+        isFormValid: false,
 
         use_types: ['지출', '수입'],
         

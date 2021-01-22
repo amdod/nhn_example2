@@ -15,14 +15,24 @@
 
 <div id="app">
 <template>
-    <v-app-bar> 
+    <v-app>
+    <v-container>
+    <v-card
+    class="mx-auto"
+    max-width="600"
+    height="350"
+    elevation="10"
+    >
+    <v-app-bar
+    color="deep-purple accent-4"
+    dark
+    > 
       가계부 추가하기
     </v-app-bar> 
-    <v-app>
     <v-form
     v-model="isFormValid"
     >
-        <v-container style="maxWidth: 700px;">
+        <v-container style="maxWidth: 500px;">
         <v-row>
         <v-col
         class="d-flex"
@@ -167,6 +177,8 @@
                 </v-row>
         </v-container>
     </v-form>
+    </v-card>
+    </v-container>
 </v-app>
 </template>
 </div>
