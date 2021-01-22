@@ -1,57 +1,25 @@
-# CodeIgniter 4 Framework
-
-## What is CodeIgniter?
-
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible, and secure. 
-More information can be found at the [official site](http://codeigniter.com).
-
-This repository holds the distributable version of the framework,
-including the user guide. It has been built from the 
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
-
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
-
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/). 
+# 과제2 가계부 만들기
 
 
-## Important Change with index.php
+## 가계부 홈페이지
+<img width="1440" alt="스크린샷 2021-01-22 오후 6 00 14" src="https://user-images.githubusercontent.com/67546808/105469532-bccbd400-5cdb-11eb-93c3-7a6a9f750c73.png">
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## 가계부 작성
+### 가계부 작성 화면
+<img width="1321" alt="스크린샷 2021-01-22 오후 6 01 36" src="https://user-images.githubusercontent.com/67546808/105469623-e553ce00-5cdb-11eb-9642-a6d0187925f3.png">
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
 
-**Please** read the user guide for a better explanation of how CI4 works!
-The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
+## 가계부 수정
+### 가계부 수정 화면
+<img width="1322" alt="스크린샷 2021-01-22 오후 6 02 31" src="https://user-images.githubusercontent.com/67546808/105469716-04526000-5cdc-11eb-93fe-f5445889d07a.png">
 
-## Repository Management
+## 가계부 삭제
+### 가계부 삭제 화면
+<img width="1264" alt="스크린샷 2021-01-22 오후 6 03 42" src="https://user-images.githubusercontent.com/67546808/105469872-2ea41d80-5cdc-11eb-8085-32ea15712ba3.png">
 
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 가계부 삭제 후 홈페이지
+<img width="1298" alt="스크린샷 2021-01-22 오후 6 04 47" src="https://user-images.githubusercontent.com/67546808/105469980-54c9bd80-5cdc-11eb-95d4-e510ee0ed5c9.png">
 
-This repository is a "distribution" one, built by our release preparation script. 
-Problems with it can be raised on our forum, or as issues in the main repository.
 
-## Contributing
-
-We welcome contributions from the community.
-
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing.md) section in the development repository.
-
-## Server Requirements
-
-PHP version 7.2 or higher is required, with the following extensions installed: 
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
+## 데이터베이스 구조
+<img width="437" alt="스크린샷 2021-01-22 오후 6 06 58" src="https://user-images.githubusercontent.com/67546808/105470251-ad00bf80-5cdc-11eb-8e7c-2908d2896dd1.png">
